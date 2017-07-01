@@ -379,7 +379,7 @@ var pizzaElementGenerator = function(i) {
   pizzaImageContainer.style.width="35%";
 
   pizzaImage.src = "images/pizza.png";
-  pizzaImage.classList.add("img-responsive","pizza-img");
+  pizzaImage.classList.add("img-responsive");
   pizzaImageContainer.appendChild(pizzaImage);
   pizzaContainer.appendChild(pizzaImageContainer);
 
@@ -446,22 +446,24 @@ var resizePizzas = function(size) {
     var newwidth;
     switch(size) {
       case "1":
-        newwidth = 0.50;
+        newwidth = "25%";
         break;
       case "2":
-        newwidth = 0.75;
+        newwidth = "33.33%";
         break;
       case "3":
-        newwidth = 1;
+        newwidth = "50%";
         break;
       default:
         console.log("bug in sizeSwitcher");
     }
     //Looping through the classes and changing the width causes Repaint and therefore loss of time. I decided to use the transform and scale the image
-    var pizzaImg = document.querySelectorAll(".pizza-img");
-    for (var i = 0, length = document.querySelectorAll(".pizza-img").length; i < length; i++) {
+    var pizzaImg = document.getElementsByClassName("randomPizzaContainer"),
+    length = pizzaImg.length;
+    for (var i = 0; i < length; i++) {
       if (transformPrefix) {
-        pizzaImg[i].style[transformPrefix] = "scale("+newwidth+")";
+        //pizzaImg[i].style[transformPrefix] = "scale("+newwidth+")";
+        pizzaImg[i].style.width = newwidth;
       }
     }
 
@@ -512,14 +514,13 @@ function updatePositions() {
   frame++;
   window.performance.mark("mark_start_frame");
 
-  var items = document.querySelectorAll('.mover');
+  var items = document.getElementsByClassName('mover');
   var number1 = document.body.scrollTop / 1250;
   for (var i = 0, len=items.length; i < len; i++) {
     var phase = Math.sin(number1 + (i % 5)) * 100;
     if(transformPrefix){
       items[i].style[transformPrefix] = 'translateX(' + phase + 'px)';
     }
-
   }
 
   // User Timing API to the rescue again. Seriously, it's worth learning.
@@ -539,15 +540,13 @@ function updatePositions() {
 //Added the width and the height directly to the css property to avoid causing repaint everytime. As the zooming can be handled by transform later
 document.addEventListener('DOMContentLoaded', function() {
   var cols = 8;
-  var s = 256;
-  for (var i = 2; i < 200; i++) {
+  var s = (window.innerHeight/3);
+  for (var i = 2; i < 24; i++) {
     var elem = document.createElement('img');
     elem.className = 'mover';
     elem.src = "images/pizza-bg.png";
-    // elem.style.height = "100px";
-    // elem.style.width = "73.333px";
-   elem.style.left = (i % cols) * s +'px';
-   elem.style.top = (Math.floor(i / cols) * s) + 'px';
+    elem.style.left = (((i % cols) * s)-500)+'px';
+    elem.style.top = ((Math.floor(i / cols) * s)+50) + 'px';
     document.getElementById("movingPizzas1").appendChild(elem);
   }
 });

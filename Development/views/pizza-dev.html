@@ -121,9 +121,7 @@ img {
 
   .mover {
     position: fixed;
-    width: 77px;
     z-index: -1;
-    will-change: transform;
   }
 
   .randomPizzaContainer {
@@ -142,17 +140,14 @@ img {
    .container {
     background-color: rgba(240, 60, 60, 0.8);
   }
-  .pizza-img{
-    -webkit-transform:scale(0.75);
-    -ms-transform:scale(0.75);
-    -moz-transform:scale(0.75);
-    transform:scale(0.75);
-  }
+
   </style>
 </head>
 
 <body>
   <div class="container">
+      <div id="movingPizzas1" class="col-md-12">
+      </div>
     <div id="header" class="row">
       <div class="col-md-6">
         <div class="row">
@@ -176,8 +171,6 @@ img {
             </div>
           </div>
         </div>
-      </div>
-      <div id="movingPizzas1" class="col-md-6">
       </div>
     </div>
     <div id="callToAction" class="row">
